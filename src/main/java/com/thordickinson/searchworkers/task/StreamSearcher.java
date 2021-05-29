@@ -104,23 +104,14 @@ public class StreamSearcher implements Runnable {
      */
     private boolean compareBuffer() {
         if (buffer.size() != targetString.length()) return false;
-        //TODO: We may improve this comparison
-        String bufferStr = getBufferAsString();
-        return targetString.equals(bufferStr);
-    }
-
-    /**
-     * Converts the current buffer to a string so it can be compared
-     * @return a string
-     */
-    private String getBufferAsString() {
-        char[] bufferArray = new char[buffer.size()];
         int index = 0;
         Iterator<Character> iterator = buffer.iterator();
         while (iterator.hasNext()) {
-            bufferArray[index++] = iterator.next();
+            if(targetString.charAt(index++) != iterator.next()){
+                return false;
+            }
         }
-        return new String(bufferArray);
+        return true;
     }
 
     /**

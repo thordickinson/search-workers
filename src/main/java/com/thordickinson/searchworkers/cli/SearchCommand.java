@@ -4,6 +4,8 @@ import com.thordickinson.searchworkers.stream.CharStream;
 import com.thordickinson.searchworkers.stream.ConstantStringCharStream;
 import com.thordickinson.searchworkers.stream.RandomCharStream;
 import com.thordickinson.searchworkers.task.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import picocli.CommandLine;
 
@@ -14,6 +16,7 @@ import picocli.CommandLine;
 public class SearchCommand implements Runnable{
 
     private final ApplicationContext ctx;
+    private static final Logger LOG = LoggerFactory.getLogger(SearchCommand.class);
 
     public SearchCommand(ApplicationContext ctx){
         this.ctx = ctx;
@@ -28,13 +31,21 @@ public class SearchCommand implements Runnable{
     @CommandLine.Option(names = { "-f", "--timeout-fail"}, description = "Forces a timeout fail")
     private Boolean timeoutFail = false;
 
+
+    @CommandLine.Option(names = { "-n", "--thread-count"}, description = "Number of concurrent threads to run")
+    private Integer threadCount = 10;
+
     @Override
     public void run() {
         TaskService service = ctx.getBean(TaskService.class);
-        for(int i = 0; i < 10; i++){
-            CharStream stream = timeoutFail? new ConstantStringCharStream("a", true)  : new RandomCharStream();
-            service.search("Task " + i, stream, targetString, timeout * 1000);
+        LOG.info("Running {} threads", threadCount);
+        if(timeoutFail){
+            LOG.warn("Forcing a timeout failure");
         }
-        service.shutdown();
+        for(int i = 0; i < threadCount; i++){
+            CharStream stream = timeoutFail? new ConstantStringCharStream("a", true)  : new RandomCharStream();
+            service.addTask("Task " + i, stream, targetString, timeout * 1000);
+        }
+        service.runTasks();
     }
 }
