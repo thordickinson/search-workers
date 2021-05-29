@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Building project... please wait"
+./mvnw -q -Dmaven.test.skip=true package
+if [ $? -ne 0 ]; then
+    echo "===  Error building project, make sure you have a JDK and the JAVA_HOME env variable set ==="
+    exit 1
+fi
+pushd target
+java -jar search-workers-0.0.1-SNAPSHOT.jar "$@"
+popd
