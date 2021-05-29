@@ -4,7 +4,8 @@ import com.thordickinson.searchworkers.stream.CharStream;
 
 /**
  * A stream that returns a constant char named as {@link #surroundingChar} the first n invocations before
- * {@link #countBefore} and after the {@link #countBefore} + {@link #targetString}.length.
+ * {@link #countBefore} and after the {@link #countBefore} + {@link #targetString}.length. After the n first
+ * invocations this stream will return the {@link #targetString} until the end of it.
  */
 public class TestConstantStringCharStream implements CharStream {
 
