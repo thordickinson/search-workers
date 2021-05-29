@@ -74,9 +74,10 @@ public class TaskService implements  TaskEndListener{
      * Print the final results.
      */
     private void printResults(){
-        LOG.info("Here comes the result");
+        //Using println only in this method!!
+        System.out.format("RESULT\n%-10s%10s%15s%13s\n", "Task", "Elapsed", "Bytes Read", "Status");
         Stream<TaskEndEvent> sortedResults = tasks.values().stream().map(w -> w.getResult()).map(r -> r.orElseThrow(IllegalStateException::new)).sorted();
-        sortedResults.forEach(r -> LOG.info("{} -> Elapsed: {}ms - Byte Count: {} - Status: {}", r.getTaskId(), r.getElapsedTimeMs(), r.getByteCount(), r.getStatus()));
+        sortedResults.forEach(r -> System.out.format("%s%10dms%15d%15s\n",r.getTaskId(), r.getElapsedTimeMs(), r.getByteCount(), r.getStatus()));
     }
 
     /**

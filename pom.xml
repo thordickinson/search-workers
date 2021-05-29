@@ -14,7 +14,7 @@
 	<name>search-workers</name>
 	<description>Multithread utility for searching text in random strings</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

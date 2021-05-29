@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Building project... please wait"
+echo "Building project... please wait (It might take about 5 minutes the first time)"
 ./mvnw -q -Dmaven.test.skip=true package
 if [ $? -ne 0 ]; then
     echo "===  Error building project, make sure you have a JDK and the JAVA_HOME env variable set ==="
