@@ -86,7 +86,7 @@ public class TaskService implements  TaskEndListener{
      */
     protected void onTaskFailure(TaskWrapper wrapper){
         TaskEndEvent event = wrapper.getResult().get();
-        LOG.warn("Task failed in {}ms - [{} bytes processed]", event.getElapsedTimeMs(), event.getByteCount());
+        LOG.error("Task failed in {}ms - [{} bytes processed]", event.getElapsedTimeMs(), event.getByteCount(), event.getError().orElse(null));
     }
 
     /**

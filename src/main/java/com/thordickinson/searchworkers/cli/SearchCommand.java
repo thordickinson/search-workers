@@ -35,6 +35,10 @@ public class SearchCommand implements Runnable{
     @CommandLine.Option(names = { "-n", "--thread-count"}, description = "Number of concurrent threads to run")
     private Integer threadCount = 10;
 
+    @CommandLine.Option(names = { "-l", "--char-generator-limit"}, description = "Set the maximum char code for random char generation")
+    private Integer charGeneratorLimit = 128;
+
+
     @Override
     public void run() {
         TaskService service = ctx.getBean(TaskService.class);
@@ -43,7 +47,8 @@ public class SearchCommand implements Runnable{
             LOG.warn("Forcing a timeout failure");
         }
         for(int i = 0; i < threadCount; i++){
-            CharStream stream = timeoutFail? new ConstantStringCharStream("a", true)  : new RandomCharStream();
+            CharStream stream = timeoutFail? new ConstantStringCharStream("a", true)  :
+                    new RandomCharStream(charGeneratorLimit);
             service.addTask("Task " + i, stream, targetString, timeout * 1000);
         }
         service.runTasks();

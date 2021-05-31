@@ -29,6 +29,17 @@ You can set the timeout in seconds by using the `-t` parameter, the default valu
 To force a timeout failure you can use the `-f` argument as follows.
 ``./search-workers -f``
 
+### Character generator limit
+You can also set the limit for the character generator using the `-l` parameter. It is used to generate a
+random integer that will be casted to a `char` for sending each search stream. Setting
+a higher value will make harder for the searcher task to find a coincidence. The default
+value is 128 which is enough for generating all the letters from a to z in both lower and upper case and the
+digits. The max value is 65535.
+``./search-workers -f``
+
+
+
+
 
 
 
