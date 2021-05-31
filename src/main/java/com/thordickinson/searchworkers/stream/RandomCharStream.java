@@ -17,7 +17,7 @@ public class RandomCharStream implements CharStream {
     /**
      * A string that contains all the possible characters this stream can return.
      */
-    public static final String AVAILABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxys";
+    public static final String AVAILABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxys1234567890,.;:-_{[}]´+~*!#$%&/()=?¡'¿|";
     /**
      * @return a pseudo-random character from the {@link #AVAILABLE_CHARS}.
      */
